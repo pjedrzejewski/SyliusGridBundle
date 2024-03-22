@@ -319,3 +319,89 @@ $field->setOptions([
     // Your options here
 ]);
 ```
+
+Callback
+--------
+
+The Callback column aims to offer almost as much flexibility as the Twig column, but without requiring the creation of a template.
+You simply need to specify a callback, which allows you to transform the 'data' variable on the fly.
+
+By default it uses the name of the field, but you can specify the path
+alternatively. For example:
+
+<details open><summary>PHP</summary>
+
+```php
+<?php
+// config/packages/sylius_grid.php
+
+use Sylius\Bundle\GridBundle\Builder\Field\CallbackField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid): void {
+    $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
+        ->addField(
+            CallbackField::create('roles' fn (array $roles): string => implode(', ', $roles))
+                ->setLabel('app.ui.roles') // # each filed type can have a label, we suggest using translation keys instead of messages
+                ->setPath('roles')
+        )
+        ->addField(
+            CallbackField::create('status' fn (array $status): string => "<strong>$status</strong>", false) // the third argument allows to disable htmlspecialchars if set to false
+                ->setLabel('app.ui.status') // # each filed type can have a label, we suggest using translation keys instead of messages
+                ->setPath('status')
+        )
+    )
+};
+```
+
+OR
+
+```php
+<?php
+# src/Grid/UserGrid.php
+
+declare(strict_types=1);
+
+namespace App\Grid;
+
+use App\Entity\User;
+use Sylius\Bundle\GridBundle\Builder\Field\CallbackField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+
+final class UserGrid extends AbstractGrid implements ResourceAwareGridInterface
+{
+    public static function getName(): string
+    {
+           return 'app_user';
+    }
+
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addField(
+                CallbackField::create('roles' fn (array $roles): string => implode(', ', $roles))
+                    ->setLabel('app.ui.roles') // # each filed type can have a label, we suggest using translation keys instead of messages
+                    ->setPath('roles')
+            )
+            ->addField(
+                CallbackField::create('status' fn (array $status): string => "<strong>$status</strong>", false) // the third argument allows to disable htmlspecialchars if set to false
+                    ->setLabel('app.ui.status') // # each filed type can have a label, we suggest using translation keys instead of messages
+                    ->setPath('status')
+            )
+        ;
+    }
+
+    public function getResourceClass(): string
+    {
+        return User::class;
+    }
+}
+```
+
+</details>
+
+This configuration will display each role of a customer separated with a comma.
+

@@ -15,6 +15,12 @@
     <services>
         <defaults public="true" />
 
+        <service id="sylius.grid_field.callback" class="Sylius\Component\Grid\FieldTypes\CallbackFieldType">
+            <argument type="service" id="sylius.grid.data_extractor" />
+            <tag name="sylius.grid_field" type="callback" />
+        </service>
+        <service id="Sylius\Component\Grid\FieldTypes\CallbackFieldType" alias="sylius.grid_field.callback" />
+
         <service id="sylius.grid_field.datetime" class="Sylius\Component\Grid\FieldTypes\DatetimeFieldType">
             <argument type="service" id="sylius.grid.data_extractor" />
             <argument>%sylius_grid.timezone%</argument>
