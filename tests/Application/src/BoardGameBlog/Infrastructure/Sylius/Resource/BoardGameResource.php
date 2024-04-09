@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace App\BoardGameBlog\Infrastructure\Sylius\Resource;
 
-use Sylius\Component\Resource\Metadata\Index;
-use Sylius\Component\Resource\Metadata\Resource;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Resource\Metadata\Index;
+use Sylius\Resource\Metadata\AsResource;
+use Sylius\Resource\Model\ResourceInterface;
 
-#[Resource(
+#[AsResource(
     alias: 'app.board_game',
     section: 'admin',
     templatesDir: 'crud',
