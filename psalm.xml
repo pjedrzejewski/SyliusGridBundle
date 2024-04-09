@@ -89,5 +89,11 @@
                 <referencedClass name="Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface" />
             </errorLevel>
         </UndefinedClass>
+
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <file name="src/Bundle/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
     </issueHandlers>
 </psalm>
