@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace spec\Sylius\Bundle\GridBundle\Doctrine\PHPCRODM;
 
 use Doctrine\Common\Collections\Expr\Comparison;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\ExpressionBuilder as CollectionsExpressionBuilder;
 use PhpSpec\ObjectBehavior;
 use Sylius\Bundle\GridBundle\Doctrine\PHPCRODM\ExtraComparison;
@@ -29,19 +30,19 @@ final class ExpressionBuilderSpec extends ObjectBehavior
     }
 
     function it_builds_andx(
-        Comparison $comparison,
+        Expression $expression,
         CollectionsExpressionBuilder $expressionBuilder,
     ): void {
-        $this->andX([$comparison]);
-        $expressionBuilder->andX([$comparison])->shouldHaveBeenCalled();
+        $this->andX($expression);
+        $expressionBuilder->andX($expression)->shouldHaveBeenCalled();
     }
 
     function it_builds_orx(
-        Comparison $comparison,
+        Expression $expression,
         CollectionsExpressionBuilder $expressionBuilder,
     ): void {
-        $this->orX([$comparison]);
-        $expressionBuilder->orX([$comparison])->shouldHaveBeenCalled();
+        $this->orX($expression);
+        $expressionBuilder->orX($expression)->shouldHaveBeenCalled();
     }
 
     function it_builds_equals(
