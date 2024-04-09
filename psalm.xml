@@ -48,6 +48,12 @@
             </errorLevel>
         </InvalidArgument>
 
+        <MissingTemplateParam>
+            <errorLevel type="suppress">
+                <file name="src/Bundle/Form/DataTransformer/DateTimeFilterTransformer.php" />
+            </errorLevel>
+        </MissingTemplateParam>
+
         <PossiblyNullReference>
             <errorLevel type="suppress">
                 <file name="src/Bundle/DependencyInjection/Configuration.php" />
