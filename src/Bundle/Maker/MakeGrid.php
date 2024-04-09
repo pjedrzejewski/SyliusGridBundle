@@ -140,6 +140,7 @@ final class MakeGrid extends AbstractMaker
         return $choices;
     }
 
+    /** @param class-string $class */
     private function defaultFieldsFor(string $class): iterable
     {
         $entityManager = $this->managerRegistry->getManagerForClass($class);
