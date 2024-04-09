@@ -77,7 +77,6 @@
         "symfony/maker-bundle": "^1.36",
         "symfony/polyfill-mbstring": "<1.22.0 || >1.22.0",
         "symfony/twig-bundle": "^5.4 || ^6.0 || ^7.0",
-        "twig/extensions": "^1.5",
         "twig/twig": "^2.12 || ^3.0",
         "vimeo/psalm": "^4.26",
         "rector/rector": "^0.13"
