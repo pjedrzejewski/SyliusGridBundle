@@ -16,7 +16,6 @@ namespace spec\Sylius\Bundle\GridBundle\Doctrine\PHPCRODM;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\ODM\PHPCR\Query\Builder\ConstraintComparison;
-use Doctrine\ODM\PHPCR\Query\Builder\ConstraintOrx;
 use Doctrine\ODM\PHPCR\Query\Builder\OrderBy;
 use Doctrine\ODM\PHPCR\Query\Builder\Ordering;
 use Doctrine\ODM\PHPCR\Query\Builder\QueryBuilder;
