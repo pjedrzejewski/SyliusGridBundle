@@ -92,7 +92,7 @@ final class Field implements FieldInterface
     public function setSortable(bool $sortable, string $path = null): FieldInterface
     {
         if ($sortable) {
-            $this->sortable = $path ?: true;
+            $this->sortable = $path ?? true;
         } else {
             $this->sortable = null;
         }

@@ -62,7 +62,7 @@ final class TwigGridRenderer implements GridRendererInterface
 
     public function render(GridViewInterface $gridView, ?string $template = null)
     {
-        return $this->twig->render($template ?: $this->defaultTemplate, ['grid' => $gridView]);
+        return $this->twig->render($template ?? $this->defaultTemplate, ['grid' => $gridView]);
     }
 
     public function renderField(GridViewInterface $gridView, Field $field, $data)
