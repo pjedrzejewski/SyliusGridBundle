@@ -77,6 +77,12 @@
             </errorLevel>
         </PropertyNotSetInConstructor>
 
+        <RiskyTruthyFalsyComparison>
+            <errorLevel type="suppress">
+                <file name="src/Bundle/Form/DataTransformer/DateTimeFilterTransformer.php" />
+            </errorLevel>
+        </RiskyTruthyFalsyComparison>
+
         <TooManyArguments>
             <errorLevel type="suppress">
                 <referencedFunction name="Symfony\Component\Config\Definition\Builder\TreeBuilder::__construct" />
