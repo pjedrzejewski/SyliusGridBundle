@@ -3,6 +3,7 @@ app_books:
         alias: app.book
         grid: app_book
         only: ['index']
+        templates: 'crud'
     type: sylius.resource_api
 
 app_author:

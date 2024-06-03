@@ -91,11 +91,11 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             )
             ->addActionGroup(
                 ItemActionGroup::create(
-                    ShowAction::create([
-                        'link' => [
-                            'route' => 'app_admin_book_show',
-                        ],
-                    ]),
+//                    ShowAction::create([
+//                        'link' => [
+//                            'route' => 'app_admin_book_show',
+//                        ],
+//                    ]),
                 ),
             )
             ->addActionGroup(

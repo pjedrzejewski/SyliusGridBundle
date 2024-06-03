@@ -1,4 +1,6 @@
-<h1>{{ (operation.resource.applicationName ~ '.ui.' ~ operation.resource.pluralName)|trans }}</h1>
+{% set metadata = resource_metadata|default(metadata) %}
+
+<h1>{{ (metadata.applicationName ~ '.ui.' ~ metadata.pluralName)|trans }}</h1>
 
 {% set grid = resources %}
 {% set definition = grid.definition %}
