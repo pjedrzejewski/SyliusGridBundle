@@ -16,10 +16,10 @@ namespace spec\Sylius\Bundle\GridBundle\Doctrine\PHPCRODM;
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\ODM\PHPCR\Query\Builder\ConstraintComparison;
-use Doctrine\ODM\PHPCR\Query\Builder\ConstraintOrx;
 use Doctrine\ODM\PHPCR\Query\Builder\OrderBy;
 use Doctrine\ODM\PHPCR\Query\Builder\Ordering;
 use Doctrine\ODM\PHPCR\Query\Builder\QueryBuilder;
+use Doctrine\ODM\PHPCR\Query\Builder\WhereOr;
 use Doctrine\ODM\PHPCR\Query\Query;
 use Pagerfanta\Pagerfanta;
 use PhpSpec\ObjectBehavior;
@@ -47,7 +47,7 @@ final class DataSourceSpec extends ObjectBehavior
         ExpressionBuilderInterface $expressionBuilder,
         Comparison $comparison,
         Value $value,
-        ConstraintOrx $constraint,
+        WhereOr $constraint,
         ConstraintComparison $comparisonConstraint,
     ): void {
         $this->beConstructedWith($queryBuilder, $expressionBuilder);
@@ -91,12 +91,13 @@ final class DataSourceSpec extends ObjectBehavior
         QueryBuilder $queryBuilder,
         ExpressionBuilderInterface $expressionBuilder,
         Query $query,
+        OrderBy $orderBy,
     ): void {
         $this->beConstructedWith($queryBuilder, $expressionBuilder);
 
         $expressionBuilder->getOrderBys()->willReturn([]);
 
-        $queryBuilder->orderBy()->willReturn(null);
+        $queryBuilder->orderBy()->willReturn($orderBy);
         $queryBuilder->getQuery()->willReturn($query);
         $query->setMaxResults(Argument::any())->willReturn($query);
         $query->setFirstResult(Argument::any())->willReturn($query);
