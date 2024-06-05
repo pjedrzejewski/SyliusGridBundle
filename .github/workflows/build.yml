@@ -13,23 +13,30 @@ on:
 jobs:
     tests:
         runs-on: ubuntu-latest
+        continue-on-error: ${{ matrix.experimental }}
         name: "PHP ${{ matrix.php }}${{ matrix.symfony != '' && format(', Symfony {0}', matrix.symfony) || '' }}${{ matrix.currency-bundle != '' && format(', CurrencyBundle {0}', matrix.currency-bundle) || '' }}${{ matrix.postgres != '' && format(', PostgresSQL {0}', matrix.postgres) || '' }}"
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.0", "8.1"]
+                php: ["8.1", "8.2", "8.3"]
                 postgres: [""]
-                symfony: ["^5.4", "^6.0"]
-
+                symfony: ["^5.4", "^6.4"]
+                experimental: [false]
                 include:
                     -
-                        php: 8.0
+                        php: 8.1
                         symfony: "^5.4"
                         postgres: "13.3"
+                        experimental: false
                     -
-                        php: 8.0
+                        php: 8.1
                         symfony: "^5.4"
                         postgres: "14.0"
+                        experimental: false
+                    -
+                        php: 8.3
+                        symfony: "^7.0"
+                        experimental: true
         steps:
             -
                 uses: actions/checkout@v2

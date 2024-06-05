@@ -31,15 +31,15 @@
         "php": "^8.0",
         "sylius-labs/polyfill-symfony-event-dispatcher": "^1.0",
         "sylius/registry": "^1.5",
-        "symfony/config": "^5.4 || ^6.0",
+        "symfony/config": "^5.4 || ^6.4 || ^7.0",
         "symfony/deprecation-contracts": "^2.2",
-        "symfony/event-dispatcher": "^5.4 || ^6.0",
-        "symfony/http-kernel": "^5.4 || ^6.0",
+        "symfony/event-dispatcher": "^5.4 || ^6.4 || ^7.0",
+        "symfony/http-kernel": "^5.4 || ^6.4 || ^7.0",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
         "phpspec/phpspec": "^7.2",
-        "symfony/property-access": "^5.4 || ^6.0"
+        "symfony/property-access": "^5.4 || ^6.4 || ^7.0"
     },
     "extra": {
         "branch-alias": {
