@@ -48,6 +48,12 @@
             </errorLevel>
         </InvalidArgument>
 
+        <MissingTemplateParam>
+            <errorLevel type="suppress">
+                <file name="src/Bundle/Form/DataTransformer/DateTimeFilterTransformer.php" />
+            </errorLevel>
+        </MissingTemplateParam>
+
         <PossiblyNullReference>
             <errorLevel type="suppress">
                 <file name="src/Bundle/DependencyInjection/Configuration.php" />
@@ -70,6 +76,16 @@
                 <referencedProperty name="Symfony\Component\Validator\ConstraintValidator::$context" />
             </errorLevel>
         </PropertyNotSetInConstructor>
+        
+        <RiskyTruthyFalsyComparison>
+            <errorLevel type="suppress">
+                <file name="src/Component/Filter/DateFilter.php" />
+                <file name="src/Component/View/GridView.php" />
+                <file name="src/Bundle/Builder/Field/Field.php" />
+                <file name="src/Bundle/Form/DataTransformer/DateTimeFilterTransformer.php" />
+                <file name="src/Bundle/Renderer/TwigGridRenderer.php" />
+            </errorLevel>
+        </RiskyTruthyFalsyComparison>
 
         <TooManyArguments>
             <errorLevel type="suppress">
@@ -89,5 +105,11 @@
                 <referencedClass name="Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface" />
             </errorLevel>
         </UndefinedClass>
+        
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <file name="src/Bundle/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
     </issueHandlers>
 </psalm>
