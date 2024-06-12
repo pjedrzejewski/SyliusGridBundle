@@ -38,7 +38,7 @@
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
-        "phpspec/phpspec": "^7.2",
+        "phpspec/phpspec": "^7.3",
         "symfony/property-access": "^5.4 || ^6.0"
     },
     "extra": {
