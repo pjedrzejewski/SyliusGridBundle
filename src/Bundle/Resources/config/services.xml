@@ -15,6 +15,7 @@
     <imports>
         <import resource="services/field_types.xml" />
         <import resource="services/filters.xml" />
+        <import resource="services/renderer_context.xml" />
         <import resource="services/templating.xml" />
         <import resource="services/twig.xml" />
     </imports>
@@ -71,6 +72,8 @@
             <argument type="service" id="sylius.grid.data_provider" />
         </service>
         <service id="sylius.grid.view_factory" alias="Sylius\Component\Grid\View\GridViewFactoryInterface" />
+
+
 
         <service id="sylius.grid.data_provider" class="Sylius\Component\Grid\Data\DataProvider">
             <argument type="service" id="sylius.grid.data_source_provider" />

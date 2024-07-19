@@ -19,9 +19,10 @@
     </php>
 
     <testsuites>
-        <testsuite name="SyliusGridBundle Test Suite">
+        <testsuite name="Sylius Grid Test Suite">
             <directory>./tests/</directory>
             <directory>./src/Bundle/Tests/</directory>
+            <directory>./src/Component/Tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

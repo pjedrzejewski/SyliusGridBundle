@@ -23,8 +23,11 @@
             <argument>@SyliusGrid/_grid.html.twig</argument>
             <argument>%sylius.grid.templates.action%</argument>
             <argument>%sylius.grid.templates.filter%</argument>
+            <argument type="service" id="sylius.grid.renderer.context.factory.action" />
+            <argument type="service" id="sylius.grid.renderer.context.factory.filter" />
         </service>
         <service id="sylius.grid.renderer.twig" alias="Sylius\Bundle\GridBundle\Renderer\TwigGridRenderer" />
+        <service id="Sylius\Component\Grid\Renderer\GridRendererInterface" alias="Sylius\Bundle\GridBundle\Renderer\TwigGridRenderer" />
 
         <service id="Sylius\Bundle\GridBundle\Renderer\TwigBulkActionGridRenderer">
             <argument type="service" id="twig" />

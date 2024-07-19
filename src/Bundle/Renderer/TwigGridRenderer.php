@@ -18,6 +18,10 @@ use Sylius\Component\Grid\Definition\Action;
 use Sylius\Component\Grid\Definition\Field;
 use Sylius\Component\Grid\Definition\Filter;
 use Sylius\Component\Grid\FieldTypes\FieldTypeInterface;
+use Sylius\Component\Grid\Renderer\Context\Factory\ActionContextFactory;
+use Sylius\Component\Grid\Renderer\Context\Factory\ActionContextFactoryInterface;
+use Sylius\Component\Grid\Renderer\Context\Factory\FilterContextFactory;
+use Sylius\Component\Grid\Renderer\Context\Factory\FilterContextFactoryInterface;
 use Sylius\Component\Grid\Renderer\GridRendererInterface;
 use Sylius\Component\Grid\View\GridViewInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
@@ -28,36 +32,45 @@ use Twig\Environment;
 
 final class TwigGridRenderer implements GridRendererInterface
 {
-    private Environment $twig;
+    private ActionContextFactoryInterface $actionContextFactory;
 
-    private ServiceRegistryInterface $fieldsRegistry;
-
-    private FormFactoryInterface $formFactory;
-
-    private FormTypeRegistryInterface $formTypeRegistry;
-
-    private string $defaultTemplate;
-
-    private array $actionTemplates;
-
-    private array $filterTemplates;
+    private FilterContextFactoryInterface $filterContextFactory;
 
     public function __construct(
-        Environment $twig,
-        ServiceRegistryInterface $fieldsRegistry,
-        FormFactoryInterface $formFactory,
-        FormTypeRegistryInterface $formTypeRegistry,
-        string $defaultTemplate,
-        array $actionTemplates = [],
-        array $filterTemplates = [],
+        private Environment $twig,
+        private ServiceRegistryInterface $fieldsRegistry,
+        private FormFactoryInterface $formFactory,
+        private FormTypeRegistryInterface $formTypeRegistry,
+        private string $defaultTemplate,
+        private array $actionTemplates = [],
+        private array $filterTemplates = [],
+        ?ActionContextFactoryInterface $actionContextFactory = null,
+        ?FilterContextFactoryInterface $filterContextFactory = null,
     ) {
-        $this->twig = $twig;
-        $this->fieldsRegistry = $fieldsRegistry;
-        $this->formFactory = $formFactory;
-        $this->formTypeRegistry = $formTypeRegistry;
-        $this->defaultTemplate = $defaultTemplate;
-        $this->actionTemplates = $actionTemplates;
-        $this->filterTemplates = $filterTemplates;
+        if (null === $actionContextFactory) {
+            trigger_deprecation(
+                'sylius/grid-bundle',
+                '1.13',
+                sprintf(
+                    'You should pass an instance of "%s" as 8th argument. It will be required in Sylius Grid 2.0.',
+                    ActionContextFactoryInterface::class,
+                ),
+            );
+        }
+
+        if (null === $filterContextFactory) {
+            trigger_deprecation(
+                'sylius/grid-bundle',
+                '1.13',
+                sprintf(
+                    'You should pass an instance of "%s" as 9th argument. It will be required in Sylius Grid 2.0.',
+                    FilterContextFactoryInterface::class,
+                ),
+            );
+        }
+
+        $this->actionContextFactory = $actionContextFactory ?? new ActionContextFactory();
+        $this->filterContextFactory = $filterContextFactory ?? new FilterContextFactory();
     }
 
     public function render(GridViewInterface $gridView, ?string $template = null)
@@ -83,11 +96,9 @@ final class TwigGridRenderer implements GridRendererInterface
             throw new \InvalidArgumentException(sprintf('Missing template for action type "%s".', $type));
         }
 
-        return $this->twig->render($this->actionTemplates[$type], [
-            'grid' => $gridView,
-            'action' => $action,
-            'data' => $data,
-        ]);
+        $context = $this->actionContextFactory->create($gridView, $action, $data);
+
+        return $this->twig->render($this->actionTemplates[$type], $context);
     }
 
     public function renderFilter(GridViewInterface $gridView, Filter $filter)
@@ -108,11 +119,11 @@ final class TwigGridRenderer implements GridRendererInterface
         $criteria = $gridView->getParameters()->get('criteria', []);
         $form->submit($criteria);
 
-        return $this->twig->render($template, [
-            'grid' => $gridView,
-            'filter' => $filter,
+        $context = array_merge($this->filterContextFactory->create($gridView, $filter), [
             'form' => $form->get($filter->getName())->createView(),
         ]);
+
+        return $this->twig->render($template, $context);
     }
 
     /**
