@@ -55,11 +55,11 @@ final class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function it_uses_doctrine_orm_as_default_driver(): void
+    public function it_configured_no_default_drivers(): void
     {
         $this->assertProcessedConfigurationEquals(
             [[]],
-            ['drivers' => ['doctrine/orm']],
+            ['drivers' => []],
             'drivers',
         );
     }
