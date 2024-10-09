@@ -16,9 +16,9 @@
         <defaults public="true" />
 
         <service id="sylius.grid_driver.doctrine.phpcrodm" class="Sylius\Bundle\GridBundle\Doctrine\PHPCRODM\Driver">
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" on-invalid="null" />
             <tag name="sylius.grid_driver" alias="doctrine/phpcr-odm" />
-            <deprecated>The "%service_id%" service is deprecated since Sylius 1.3. Doctrine MongoDB and PHPCR support will no longer be supported in Sylius 2.0.</deprecated>
+            <deprecated package="sylius/grid-bundle" version="1.3">The "%service_id%" service is deprecated since Sylius 1.3. Doctrine MongoDB and PHPCR support will no longer be supported in Sylius 2.0.</deprecated>
         </service>
     </services>
 </container>
