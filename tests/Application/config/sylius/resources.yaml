@@ -4,11 +4,6 @@ sylius_resource:
             - '%kernel.project_dir%/src/BoardGameBlog/Infrastructure/Sylius/Resource'
 
     resources:
-        app.board_game:
-            driver: false
-            classes:
-                model: App\BoardGameBlog\Infrastructure\Sylius\Resource\BoardGameResource
-
         app.book:
             classes:
                 model: App\Entity\Book

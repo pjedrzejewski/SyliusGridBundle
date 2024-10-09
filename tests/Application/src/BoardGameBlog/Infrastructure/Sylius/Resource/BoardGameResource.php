@@ -22,6 +22,7 @@ use Sylius\Resource\Metadata\Index;
     section: 'admin',
     templatesDir: 'crud',
     routePrefix: '/admin',
+    driver: false,
 )]
 #[Index(grid: 'app_board_game')]
 final class BoardGameResource implements ResourceInterface

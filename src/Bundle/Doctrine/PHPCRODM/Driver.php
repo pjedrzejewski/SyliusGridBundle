@@ -32,15 +32,16 @@ final class Driver implements DriverInterface
      */
     public const QB_SOURCE_ALIAS = 'o';
 
-    private DocumentManagerInterface $documentManager;
-
-    public function __construct(DocumentManagerInterface $documentManager)
+    public function __construct(private ?DocumentManagerInterface $documentManager = null)
     {
-        $this->documentManager = $documentManager;
     }
 
     public function getDataSource(array $configuration, Parameters $parameters): DataSourceInterface
     {
+        if (null === $this->documentManager) {
+            throw new \LogicException('Doctrine phpcr-odm is not available. Try running "composer require doctrine/phpcr-odm".');
+        }
+
         if (!array_key_exists('class', $configuration)) {
             throw new \InvalidArgumentException('"class" must be configured.');
         }

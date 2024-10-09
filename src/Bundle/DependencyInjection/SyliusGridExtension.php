@@ -41,7 +41,14 @@ final class SyliusGridExtension extends Extension
         $container->setAlias('sylius.grid.bulk_action_renderer', 'sylius.grid.bulk_action_renderer.twig');
         $container->setAlias('sylius.grid.data_extractor', 'sylius.grid.data_extractor.property_access');
 
-        foreach ($config['drivers'] as $enabledDriver) {
+        $availableDrivers = $this->getAvailableDrivers($container);
+
+        $drivers = $config['drivers'];
+
+        // Enable all available drivers if there is no configured drivers
+        $drivers = [] !== $drivers ? $drivers : $availableDrivers;
+
+        foreach ($drivers as $enabledDriver) {
             if ($enabledDriver === SyliusGridBundle::DRIVER_DOCTRINE_PHPCR_ODM) {
                 @trigger_error(sprintf(
                     'The "%s" driver is deprecated in Sylius 1.3. Doctrine PHPCR will no longer be supported in Sylius 2.0.',
@@ -76,5 +83,20 @@ final class SyliusGridExtension extends Extension
         $container->addObjectResource($configuration);
 
         return $configuration;
+    }
+
+    private function getAvailableDrivers(ContainerBuilder $container): array
+    {
+        $availableDrivers = [];
+
+        if ($container::willBeAvailable(SyliusGridBundle::DRIVER_DOCTRINE_ORM, \Doctrine\ORM\EntityManagerInterface::class, ['doctrine/doctrine-bundle'])) {
+            $availableDrivers[] = SyliusGridBundle::DRIVER_DOCTRINE_ORM;
+        }
+
+        if ($container::willBeAvailable(SyliusGridBundle::DRIVER_DOCTRINE_PHPCR_ODM, \Doctrine\ODM\PHPCR\Document\Resource::class, ['doctrine/doctrine-bundle'])) {
+            $availableDrivers[] = SyliusGridBundle::DRIVER_DOCTRINE_PHPCR_ODM;
+        }
+
+        return $availableDrivers;
     }
 }
