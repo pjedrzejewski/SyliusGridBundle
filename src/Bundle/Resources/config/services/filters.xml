@@ -23,74 +23,74 @@
 
         <service id="sylius.form_registry.grid_filter" class="Sylius\Bundle\GridBundle\Form\Registry\FormTypeRegistry" public="false" />
 
-        <service id="Sylius\Component\Grid\Filter\StringFilter">
+        <service id="sylius.grid_filter.string" class="Sylius\Component\Grid\Filter\StringFilter">
             <tag name="sylius.grid_filter" type="string" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\StringFilterType" />
         </service>
-        <service id="sylius.grid_filter.string" alias="Sylius\Component\Grid\Filter\StringFilter" />
+        <service id="Sylius\Component\Grid\Filter\StringFilter" alias="sylius.grid_filter.string" />
 
         <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\StringFilterType">
             <tag name="form.type" />
         </service>
         <service id="sylius.form.type.grid_filter.string" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\StringFilterType" />
 
-        <service id="Sylius\Component\Grid\Filter\BooleanFilter">
+        <service id="sylius.grid_filter.boolean" class="Sylius\Component\Grid\Filter\BooleanFilter">
             <tag name="sylius.grid_filter" type="boolean" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType" />
         </service>
-        <service id="sylius.grid_filter.boolean" alias="Sylius\Component\Grid\Filter\BooleanFilter" />
+        <service id="Sylius\Component\Grid\Filter\BooleanFilter" alias="sylius.grid_filter.boolean" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType">
+        <service id="sylius.form.type.grid_filter.boolean" class="Sylius\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.boolean" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType" alias="sylius.form.type.grid_filter.boolean" />
 
-        <service id="Sylius\Component\Grid\Filter\DateFilter">
+        <service id="sylius.grid_filter.date" class="Sylius\Component\Grid\Filter\DateFilter">
             <tag name="sylius.grid_filter" type="date" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\DateFilterType" />
         </service>
-        <service id="sylius.grid_filter.date" alias="Sylius\Component\Grid\Filter\DateFilter" />
+        <service id="Sylius\Component\Grid\Filter\DateFilter" alias="sylius.grid_filter.date" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\DateFilterType">
+        <service id="sylius.form.type.grid_filter.date" class="Sylius\Bundle\GridBundle\Form\Type\Filter\DateFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.date" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\DateFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\DateFilterType" alias="sylius.form.type.grid_filter.date" />
 
-        <service id="Sylius\Component\Grid\Filter\EntityFilter">
+        <service id="sylius.grid_filter.entity" class="Sylius\Component\Grid\Filter\EntityFilter">
             <tag name="sylius.grid_filter" type="entity" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\EntityFilterType" />
         </service>
-        <service id="sylius.grid_filter.entity" alias="Sylius\Component\Grid\Filter\EntityFilter" />
+        <service id="Sylius\Component\Grid\Filter\EntityFilter" alias="sylius.grid_filter.entity" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\EntityFilterType">
+        <service id="sylius.form.type.grid_filter.entity" class="Sylius\Bundle\GridBundle\Form\Type\Filter\EntityFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.entity" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\EntityFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\EntityFilterType" alias="sylius.form.type.grid_filter.entity" />
 
-        <service id="Sylius\Component\Grid\Filter\ExistsFilter">
+        <service id="sylius.grid_filter.exists" class="Sylius\Component\Grid\Filter\ExistsFilter">
             <tag name="sylius.grid_filter" type="exists" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\ExistsFilterType" />
         </service>
-        <service id="sylius.grid_filter.exists" alias="Sylius\Component\Grid\Filter\ExistsFilter" />
+        <service id="Sylius\Component\Grid\Filter\ExistsFilter" alias="sylius.grid_filter.exists" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\ExistsFilterType">
+        <service id="sylius.form.type.grid_filter.exists" class="Sylius\Bundle\GridBundle\Form\Type\Filter\ExistsFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.exists" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\ExistsFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\ExistsFilterType" alias="sylius.form.type.grid_filter.exists" />
 
         <service id="Sylius\Component\Grid\Filter\NumericRangeFilter">
             <tag name="sylius.grid_filter" type="numeric_range" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\NumericRangeFilterType" />
         </service>
         <service id="sylius.grid_filter.numeric_range" alias="Sylius\Component\Grid\Filter\NumericRangeFilter" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\NumericRangeFilterType">
+        <service id="sylius.form.type.grid_filter.numeric_range" class="Sylius\Bundle\GridBundle\Form\Type\Filter\NumericRangeFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.numeric_range" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\NumericRangeFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\NumericRangeFilterType" alias="sylius.form.type.grid_filter.numeric_range" />
 
-        <service id="Sylius\Component\Grid\Filter\SelectFilter">
+        <service id="sylius.grid_filter.select" class="Sylius\Component\Grid\Filter\SelectFilter">
             <tag name="sylius.grid_filter" type="select" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\SelectFilterType" />
         </service>
-        <service id="sylius.grid_filter.select" alias="Sylius\Component\Grid\Filter\SelectFilter" />
+        <service id="Sylius\Component\Grid\Filter\SelectFilter" alias="sylius.grid_filter.select" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\SelectFilterType">
+        <service id="sylius.form.type.grid_filter.select" class="Sylius\Bundle\GridBundle\Form\Type\Filter\SelectFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.select" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\SelectFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\SelectFilterType" alias="sylius.form.type.grid_filter.select" />
     </services>
 </container>
