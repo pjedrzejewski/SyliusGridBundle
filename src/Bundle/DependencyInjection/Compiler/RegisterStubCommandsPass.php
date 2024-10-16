@@ -28,8 +28,8 @@ final class RegisterStubCommandsPass implements CompilerPassInterface
     {
         if (!$this->isMakerEnabled($container)) {
             $container->register(StubMakeGrid::class)->setClass(StubMakeGrid::class)->addTag('console.command');
-            $container->removeDefinition(MakeGrid::class);
-            $container->removeAlias('sylius.grid.maker');
+            $container->removeDefinition('sylius.grid.maker');
+            $container->removeAlias(MakeGrid::class);
         }
     }
 
