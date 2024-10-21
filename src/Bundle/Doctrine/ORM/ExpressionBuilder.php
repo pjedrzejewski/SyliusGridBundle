@@ -40,7 +40,10 @@ final class ExpressionBuilder implements MemberOfAwareExpressionBuilderInterface
 
     public function comparison(string $field, string $operator, $value)
     {
-        return new Comparison($field, $operator, $value);
+        $fieldWithJoin = $this->resolveFieldByAddingJoins($field);
+        $valueWithJoin = $this->resolveFieldByAddingJoins($value);
+
+        return new Comparison($fieldWithJoin, $operator, $valueWithJoin);
     }
 
     public function equals(string $field, $value)
