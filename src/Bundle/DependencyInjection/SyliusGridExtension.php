@@ -16,9 +16,11 @@ namespace Sylius\Bundle\GridBundle\DependencyInjection;
 use Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle;
 use Sylius\Bundle\GridBundle\Grid\GridInterface;
 use Sylius\Bundle\GridBundle\SyliusGridBundle;
+use Sylius\Component\Grid\Attribute\AsFilter;
 use Sylius\Component\Grid\Data\DataProviderInterface;
 use Sylius\Component\Grid\Filtering\FilterInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -59,6 +61,21 @@ final class SyliusGridExtension extends Extension
         $container->registerForAutoconfiguration(GridInterface::class)
             ->addTag('sylius.grid')
         ;
+
+        $container->registerAttributeForAutoconfiguration(
+            AsFilter::class,
+            static function (ChildDefinition $definition, AsFilter $attribute, \Reflector $reflector): void {
+                // Helps to avoid issues with psalm
+                if (!$reflector instanceof \ReflectionClass) {
+                    return;
+                }
+
+                $definition->addTag(AsFilter::SERVICE_TAG, [
+                'type' => $attribute->getType() ?? $reflector->getName(),
+                'form_type' => $attribute->getFormType(),
+                ]);
+            },
+        );
 
         $container->registerForAutoconfiguration(FilterInterface::class)
             ->addTag('sylius.grid_filter')
