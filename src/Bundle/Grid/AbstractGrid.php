@@ -22,7 +22,7 @@ abstract class AbstractGrid implements GridInterface
     public static function getName(): string
     {
         if ($attribute = self::getAttributes()) {
-            return $attribute[0]->newInstance()->getName();
+            return $attribute[0]?->newInstance()->name ?? static::class;
         }
 
         return static::class;
@@ -31,7 +31,7 @@ abstract class AbstractGrid implements GridInterface
     public function getResourceClass(): string
     {
         if ($attribute = self::getAttributes()) {
-            return $attribute[0]->newInstance()->getResourceClass();
+            return $attribute[0]->newInstance()->resourceClass;
         }
 
         throw new \LogicException(sprintf(
