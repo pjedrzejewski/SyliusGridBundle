@@ -913,12 +913,12 @@ final class GridBuilderConfigurationTest extends AbstractExtensionTestCase
 
         $this->load([
             'grids' => [
-                'app_foo_with_attribute' => $grid->toArray(),
+                AttributeFooGrid::class => $grid->toArray(),
             ],
         ]);
 
         $this->assertContainerBuilderHasParameter('sylius.grids_definitions', [
-            'app_foo_with_attribute' => [
+            AttributeFooGrid::class => [
                 'driver' => [
                     'name' => Driver::NAME,
                     'options' => [
