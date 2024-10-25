@@ -71,8 +71,8 @@ final class SyliusGridExtension extends Extension
                 }
 
                 $definition->addTag(AsFilter::SERVICE_TAG, [
-                'type' => $attribute->getType() ?? $reflector->getName(),
-                'form_type' => $attribute->getFormType(),
+                    'type' => $attribute->type ?? $reflector->getName(),
+                    'form_type' => $attribute->formType,
                 ]);
             },
         );

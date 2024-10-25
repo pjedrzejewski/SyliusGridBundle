@@ -22,18 +22,8 @@ final class AsFilter
      * @param class-string $formType The form type class name to use for filter rendering
      */
     public function __construct(
-        private readonly string $formType,
-        private readonly ?string $type = null,
+        public readonly string $formType,
+        public readonly ?string $type = null,
     ) {
-    }
-
-    public function getFormType(): string
-    {
-        return $this->formType;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
     }
 }
