@@ -22,7 +22,9 @@ abstract class AbstractGrid implements GridInterface
     public static function getName(): string
     {
         if ($attribute = self::getAttributes()) {
-            return $attribute[0]?->newInstance()->name ?? static::class;
+            if (!empty($attribute[0])) {
+                return $attribute[0]->newInstance()->name ?? static::class;
+            }
         }
 
         return static::class;
