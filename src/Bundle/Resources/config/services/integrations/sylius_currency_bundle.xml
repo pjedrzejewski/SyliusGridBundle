@@ -15,14 +15,14 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\Component\Grid\Filter\MoneyFilter">
+        <service id="sylius.grid_filter.money" class="Sylius\Component\Grid\Filter\MoneyFilter">
             <tag name="sylius.grid_filter" type="money" form-type="Sylius\Bundle\GridBundle\Form\Type\Filter\MoneyFilterType" />
         </service>
-        <service id="sylius.grid_filter.money" alias="Sylius\Component\Grid\Filter\MoneyFilter" />
+        <service id="Sylius\Component\Grid\Filter\MoneyFilter" alias="sylius.grid_filter.money" />
 
-        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\MoneyFilterType">
+        <service id="sylius.form.type.grid_filter.money" class="Sylius\Bundle\GridBundle\Form\Type\Filter\MoneyFilterType">
             <tag name="form.type" />
         </service>
-        <service id="sylius.form.type.grid_filter.money" alias="Sylius\Bundle\GridBundle\Form\Type\Filter\MoneyFilterType" />
+        <service id="Sylius\Bundle\GridBundle\Form\Type\Filter\MoneyFilterType" alias="sylius.form.type.grid_filter.money" />
     </services>
 </container>

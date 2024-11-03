@@ -43,22 +43,22 @@ final class RegisterStubCommandsPassTest extends AbstractCompilerPassTestCase
     /** @test */
     public function it_unregisters_definition_for_grid_maker_when_maker_is_not_registered(): void
     {
-        $this->registerService(MakeGrid::class, MakeGrid::class);
+        $this->registerService('sylius.grid.maker', MakeGrid::class);
 
         $this->compile();
 
-        $this->assertContainerBuilderNotHasService(MakeGrid::class);
+        $this->assertContainerBuilderNotHasService('sylius.grid.maker');
     }
 
     /** @test */
     public function it_does_not_unregister_definition_for_grid_maker_when_maker_is_registered(): void
     {
         $this->setParameter('kernel.bundles', [MakerBundle::class]);
-        $this->registerService(MakeGrid::class, MakeGrid::class);
+        $this->registerService('sylius.grid.maker', MakeGrid::class);
 
         $this->compile();
 
-        $this->assertContainerBuilderHasService(MakeGrid::class, MakeGrid::class);
+        $this->assertContainerBuilderHasService('sylius.grid.maker', MakeGrid::class);
     }
 
     protected function registerCompilerPass(ContainerBuilder $container): void
