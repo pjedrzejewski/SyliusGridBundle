@@ -33,7 +33,10 @@ sylius_grid:
                 title: asc
             fields:
                 title:
-                    type: string
+                    # type: string
+                    type: callback
+                    options:
+                        callback: "expr:service('app.tools.string.strtoupper')"
                     label: Title
                     sortable: ~
                 author:

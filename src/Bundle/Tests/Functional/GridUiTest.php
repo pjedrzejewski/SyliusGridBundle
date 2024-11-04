@@ -98,7 +98,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(1, $titles);
-        $this->assertSame('Book 5', $titles[0]);
+        $this->assertSame('BOOK 5', $titles[0]);
     }
 
     /** @test */
@@ -112,7 +112,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(1, $titles);
-        $this->assertSame('Jurassic Park', $titles[0]);
+        $this->assertSame('JURASSIC PARK', $titles[0]);
     }
 
     /** @test */
@@ -125,7 +125,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(2, $titles);
-        $this->assertSame('Jurassic Park', $titles[0]);
+        $this->assertSame('JURASSIC PARK', $titles[0]);
     }
 
     /** @test */
@@ -139,7 +139,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(3, $titles);
-        $this->assertSame('A Study in Scarlet', $titles[0]);
+        $this->assertSame('A STUDY IN SCARLET', $titles[0]);
     }
 
     /** @test */
@@ -152,7 +152,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(2, $titles);
-        $this->assertSame('Jurassic Park', $titles[0]);
+        $this->assertSame('JURASSIC PARK', $titles[0]);
     }
 
     /** @test */
@@ -165,7 +165,7 @@ final class GridUiTest extends ApiTestCase
         $titles = $this->getBookTitlesFromResponse();
 
         $this->assertCount(1, $titles);
-        $this->assertSame('Jurassic Park', $titles[0]);
+        $this->assertSame('JURASSIC PARK', $titles[0]);
     }
 
     /** @test */
