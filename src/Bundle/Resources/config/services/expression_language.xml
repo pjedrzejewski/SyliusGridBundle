@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ This file is part of the Sylius package.
+ (c) Sylius Sp. z o.o.
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sylius_grid.expression_language.factory" class="Sylius\Component\Grid\ExpressionLanguage\ExpressionLanguageFactory">
+            <argument type="tagged_iterator" tag="sylius.grid.provider"  />
+        </service>
+        <service id="Sylius\Component\Grid\ExpressionLanguage\ExpressionLanguageFactory" alias="sylius_grid.expression_language.factory" />
+
+        <service id="sylius_grid.expression_language" class="Symfony\Component\ExpressionLanguage\ExpressionLanguage">
+            <factory service="sylius_grid.expression_language.factory" />
+        </service>
+
+        <service id="sylius_grid.expression_language.expression_evaluator" class="Sylius\Component\Grid\ExpressionLanguage\ExpressionEvaluator">
+            <argument type="service" id="sylius_grid.expression_language" />
+            <argument type="service" id="sylius_grid.expression_language.variables_collection_aggregate"  />
+        </service>
+        <service id="Sylius\Component\Grid\ExpressionLanguage\ExpressionEvaluator" alias="sylius_grid.expression_language.expression_evaluator" />
+
+        <service id="sylius_grid.expression_language.variables_collection_aggregate" class="Sylius\Component\Grid\ExpressionLanguage\VariablesCollectionAggregate">
+            <argument type="tagged_iterator" tag="sylius.grid.variables" />
+        </service>
+        <service id="Sylius\Component\Grid\ExpressionLanguage\VariablesCollectionAggregate" alias="sylius_grid.expression_language.variables_collection_aggregate" />
+    </services>
+</container>

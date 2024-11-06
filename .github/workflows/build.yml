@@ -85,6 +85,10 @@ jobs:
                     (cd src/Component && composer validate --strict)
 
             -
+                name: Run spec tests
+                run: vendor/bin/phpspec run
+
+            -
                 name: Run component tests
                 run: (cd src/Component && vendor/bin/phpspec run)
 

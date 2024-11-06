@@ -16,9 +16,12 @@ namespace Sylius\Bundle\GridBundle\DependencyInjection;
 use Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle;
 use Sylius\Bundle\GridBundle\Grid\GridInterface;
 use Sylius\Bundle\GridBundle\SyliusGridBundle;
+use Sylius\Component\Grid\Attribute\AsExpressionProvider;
+use Sylius\Component\Grid\Attribute\AsExpressionVariables;
 use Sylius\Component\Grid\Data\DataProviderInterface;
 use Sylius\Component\Grid\Filtering\FilterInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -67,6 +70,20 @@ final class SyliusGridExtension extends Extension
         $container->registerForAutoconfiguration(DataProviderInterface::class)
             ->addTag('sylius.grid_data_provider')
         ;
+
+        $container->registerAttributeForAutoconfiguration(
+            AsExpressionVariables::class,
+            static function (ChildDefinition $definition, AsExpressionVariables $attribute, \Reflector $reflector): void {
+                $definition->addTag(AsExpressionVariables::SERVICE_TAG);
+            },
+        );
+
+        $container->registerAttributeForAutoconfiguration(
+            AsExpressionProvider::class,
+            static function (ChildDefinition $definition, AsExpressionProvider $attribute, \Reflector $reflector): void {
+                $definition->addTag(AsExpressionProvider::SERVICE_TAG);
+            },
+        );
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container): Configuration

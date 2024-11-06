@@ -102,6 +102,19 @@ final class GridUiTest extends ApiTestCase
     }
 
     /** @test */
+    public function it_shows_books_prices(): void
+    {
+        $this->client->request('GET', '/books/');
+
+        $prices = $this->getBookPriceFromResponse();
+
+        $this->assertListContainsOnly($prices, [
+            '42 €',
+            '10 £',
+        ]);
+    }
+
+    /** @test */
     public function it_filters_books_by_title_with_contains(): void
     {
         $this->client->request('GET', sprintf(
@@ -275,6 +288,16 @@ final class GridUiTest extends ApiTestCase
     }
 
     /** @return string[] */
+    private function getBookPriceFromResponse(): array
+    {
+        return $this->getCrawler()
+            ->filter('[data-test-price]')
+            ->each(
+                fn (Crawler $node): string => $node->text(),
+            );
+    }
+
+    /** @return string[] */
     private function getAuthorNamesFromResponse(): array
     {
         return $this->getCrawler()
@@ -292,5 +315,15 @@ final class GridUiTest extends ApiTestCase
     protected function buildMatcher(): Matcher
     {
         return $this->matcherFactory->createMatcher(new VoidBacktrace());
+    }
+
+    private function assertListContainsOnly(array $list, array $allowedValues)
+    {
+        foreach ($list as $item) {
+            $this->assertTrue(
+                in_array($item, $allowedValues, true),
+                "Item '$item' is not in the allowed list.",
+            );
+        }
     }
 }

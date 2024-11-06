@@ -46,6 +46,11 @@ sylius_grid:
                     label: Nationality
                     path: author.nationality.name
                     sortable: author.nationality.name
+                price:
+                    type: expression
+                    label: Price
+                    options:
+                        expression: 'value.getAmount() / cents_per_unit ~ " " ~ get_currency_symbol(value.getCurrencyCode())'
             limits: [10, 5, 15]
 
         app_author:
