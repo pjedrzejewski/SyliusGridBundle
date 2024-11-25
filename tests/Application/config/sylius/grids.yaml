@@ -35,7 +35,6 @@ sylius_grid:
                 title:
                     type: string
                     label: Title
-                    sortable: ~
                 author:
                     type: string
                     label: Author
