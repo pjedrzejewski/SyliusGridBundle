@@ -12,9 +12,9 @@ namespace App\Grid\Filter;
 
 use App\Form\Type\Filter\SuppliersStatisticsFilterType;
 use Sylius\Bundle\GridBundle\Doctrine\DataSourceInterface;
-use Sylius\Component\Grid\Filtering\ConfiguragurableFilterInterface;
+use Sylius\Component\Grid\Filtering\ConfigurableFilterInterface;
 
-class SuppliersStatisticsFilter implements ConfiguragurableFilterInterface
+class SuppliersStatisticsFilter implements ConfigurableFilterInterface
 {
     public function apply(DataSourceInterface $dataSource, $name, $data, array $options = []): void
     {
