@@ -112,14 +112,11 @@ use Sylius\Bundle\GridBundle\Builder\Field\TwigField;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+use Sylius\Component\Grid\Attribute\AsGrid;
 
-final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridInterface
+#[AsGrid('app_admin_supplier', Supplier::class)]
+final class AdminSupplierGrid extends AbstractGrid
 {
-    public static function getName(): string
-    {
-           return 'app_admin_supplier';
-    }
-
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
@@ -132,11 +129,6 @@ final class AdminSupplierGrid extends AbstractGrid implements ResourceAwareGridI
                     ->setLabel('sylius.ui.enabled')
             )
         ;
-    }
-
-    public function getResourceClass(): string
-    {
-        return Supplier::class;
     }
 }
 ```

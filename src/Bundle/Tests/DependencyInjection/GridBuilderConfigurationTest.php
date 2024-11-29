@@ -39,6 +39,7 @@ use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilder;
 use Sylius\Bundle\GridBundle\DependencyInjection\SyliusGridExtension;
 use Sylius\Bundle\GridBundle\Doctrine\ORM\Driver;
+use Sylius\Component\Grid\Tests\Dummy\AttributeFooGrid;
 use Sylius\Component\Grid\Tests\Dummy\ClassAsParameterGrid;
 use Sylius\Component\Grid\Tests\Dummy\Foo;
 use Sylius\Component\Grid\Tests\Dummy\FooFightersGrid;
@@ -897,6 +898,37 @@ final class GridBuilderConfigurationTest extends AbstractExtensionTestCase
                         'options' => [],
                     ],
                 ],
+                'filters' => [],
+                'actions' => [],
+            ],
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_builds_grid_with_a_grid_attribute(): void
+    {
+        $grid = new AttributeFooGrid();
+
+        $this->load([
+            'grids' => [
+                AttributeFooGrid::class => $grid->toArray(),
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasParameter('sylius.grids_definitions', [
+            AttributeFooGrid::class => [
+                'driver' => [
+                    'name' => Driver::NAME,
+                    'options' => [
+                        'class' => Foo::class,
+                    ],
+                ],
+                'removals' => [],
+                'sorting' => [],
+                'limits' => [10, 25, 50],
+                'fields' => [],
                 'filters' => [],
                 'actions' => [],
             ],
