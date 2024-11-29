@@ -35,12 +35,15 @@ final class RegisterFiltersPass implements CompilerPassInterface
             $type = null;
             $formType = null;
 
-            if (is_a($id, TypeAwareFilterInterface::class, true)) {
-                $type = $id::getType();
+            $definition = $container->getDefinition($id);
+            $class = $definition->getClass();
+
+            if ($class !== null && is_a($class, TypeAwareFilterInterface::class, true)) {
+                $type = $class::getType();
             }
 
-            if (is_a($id, FormTypeAwareFilterInterface::class, true)) {
-                $formType = $id::getFormType();
+            if ($class !== null && is_a($class, FormTypeAwareFilterInterface::class, true)) {
+                $formType = $class::getFormType();
             }
 
             foreach ($attributes as $attribute) {

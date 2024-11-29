@@ -15,16 +15,16 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\Bundle\GridBundle\Doctrine\ORM\Driver">
+        <service id="sylius.grid_driver.doctrine.orm" class="Sylius\Bundle\GridBundle\Doctrine\ORM\Driver">
             <argument type="service" id="doctrine" />
             <tag name="sylius.grid_driver" alias="doctrine/orm" />
         </service>
-        <service id="sylius.grid_driver.doctrine.orm" alias="Sylius\Bundle\GridBundle\Doctrine\ORM\Driver" />
+        <service id="Sylius\Bundle\GridBundle\Doctrine\ORM\Driver" alias="sylius.grid_driver.doctrine.orm" />
 
-        <service id="Sylius\Bundle\GridBundle\Doctrine\DBAL\Driver">
+        <service id="sylius.grid_driver.doctrine.dbal" class="Sylius\Bundle\GridBundle\Doctrine\DBAL\Driver">
             <argument type="service" id="doctrine.dbal.default_connection" />
             <tag name="sylius.grid_driver" alias="doctrine/dbal" />
         </service>
-        <service id="sylius.grid_driver.doctrine.dbal" alias="Sylius\Bundle\GridBundle\Doctrine\DBAL\Driver" />
+        <service id="Sylius\Bundle\GridBundle\Doctrine\DBAL\Driver" alias="sylius.grid_driver.doctrine.dbal" />
     </services>
 </container>

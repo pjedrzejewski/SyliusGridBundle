@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v1.13.1 (2024-11-29)
+
+#### Details
+
+- [#347](https://github.com/Sylius/SyliusGridBundle/issues/347) [Fix] Flip ([@loic425](https://github.com/loic425))
+- [#353](https://github.com/Sylius/SyliusGridBundle/issues/353) Update interface name in custom_filter docs ([@arti0090](https://github.com/arti0090))
+- [#350](https://github.com/Sylius/SyliusGridBundle/issues/350) Update LICENSE year ([@damonsson](https://github.com/damonsson))
+- [#351](https://github.com/Sylius/SyliusGridBundle/issues/351) Create LICENSE_OF_TRADEMARK_AND_LOGO ([@damonsson](https://github.com/damonsson))
+- [#345](https://github.com/Sylius/SyliusGridBundle/issues/345) Update RegisterFiltersPass.php ([@dotdevio](https://github.com/dotdevio))
+- [#355](https://github.com/Sylius/SyliusGridBundle/issues/355) Fix static analysis in RegisterFiltersPass ([@GSadee](https://github.com/GSadee))
+
 ## v1.13.0 (2024-10-08)
 
 #### Details

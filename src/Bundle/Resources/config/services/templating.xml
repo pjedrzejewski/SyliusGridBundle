@@ -15,14 +15,14 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\Bundle\GridBundle\Templating\Helper\GridHelper" lazy="true">
+        <service id="sylius.templating.helper.grid" class="Sylius\Bundle\GridBundle\Templating\Helper\GridHelper" lazy="true">
             <argument type="service" id="sylius.grid.renderer" />
         </service>
-        <service id="sylius.templating.helper.grid" alias="Sylius\Bundle\GridBundle\Templating\Helper\GridHelper" />
+        <service id="Sylius\Bundle\GridBundle\Templating\Helper\GridHelper" alias="sylius.templating.helper.grid" />
 
-        <service id="Sylius\Bundle\GridBundle\Templating\Helper\BulkActionGridHelper" lazy="true">
+        <service id="sylius.templating.helper.bulk_action_grid" class="Sylius\Bundle\GridBundle\Templating\Helper\BulkActionGridHelper" lazy="true">
             <argument type="service" id="sylius.grid.bulk_action_renderer" />
         </service>
-        <service id="sylius.templating.helper.bulk_action_grid" alias="Sylius\Bundle\GridBundle\Templating\Helper\BulkActionGridHelper" />
+        <service id="Sylius\Bundle\GridBundle\Templating\Helper\BulkActionGridHelper" alias="sylius.templating.helper.bulk_action_grid" />
     </services>
 </container>

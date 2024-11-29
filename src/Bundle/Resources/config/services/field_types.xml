@@ -15,24 +15,24 @@
     <services>
         <defaults public="true" />
 
-        <service id="Sylius\Component\Grid\FieldTypes\DatetimeFieldType">
+        <service id="sylius.grid_field.datetime" class="Sylius\Component\Grid\FieldTypes\DatetimeFieldType">
             <argument type="service" id="sylius.grid.data_extractor" />
             <argument>%sylius_grid.timezone%</argument>
             <tag name="sylius.grid_field" type="datetime" />
         </service>
-        <service id="sylius.grid_field.datetime" alias="Sylius\Component\Grid\FieldTypes\DatetimeFieldType" />
+        <service id="Sylius\Component\Grid\FieldTypes\DatetimeFieldType" alias="sylius.grid_field.datetime" />
 
-        <service id="Sylius\Component\Grid\FieldTypes\StringFieldType">
+        <service id="sylius.grid_field.string" class="Sylius\Component\Grid\FieldTypes\StringFieldType">
             <argument type="service" id="sylius.grid.data_extractor" />
             <tag name="sylius.grid_field" type="string" />
         </service>
-        <service id="sylius.grid_field.string" alias="Sylius\Component\Grid\FieldTypes\StringFieldType" />
+        <service id="Sylius\Component\Grid\FieldTypes\StringFieldType" alias="sylius.grid_field.string" />
 
-        <service id="Sylius\Bundle\GridBundle\FieldTypes\TwigFieldType">
+        <service id="sylius.grid_field.twig" class="Sylius\Bundle\GridBundle\FieldTypes\TwigFieldType">
             <argument type="service" id="sylius.grid.data_extractor" />
             <argument type="service" id="twig" />
             <tag name="sylius.grid_field" type="twig" />
         </service>
-        <service id="sylius.grid_field.twig" alias="Sylius\Bundle\GridBundle\FieldTypes\TwigFieldType" />
+        <service id="Sylius\Bundle\GridBundle\FieldTypes\TwigFieldType" alias="sylius.grid_field.twig" />
     </services>
 </container>
