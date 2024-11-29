@@ -15,35 +15,23 @@ namespace Sylius\Bundle\GridBundle\Provider;
 
 use Sylius\Bundle\GridBundle\Grid\GridInterface;
 use Sylius\Bundle\GridBundle\Registry\GridRegistryInterface;
-use Sylius\Component\Grid\Configuration\GridConfigurationExtenderInterface;
-use Sylius\Component\Grid\Configuration\GridConfigurationRemovalsHandler;
-use Sylius\Component\Grid\Configuration\GridConfigurationRemovalsHandlerInterface;
-use Sylius\Component\Grid\Definition\ArrayToDefinitionConverterInterface;
 use Sylius\Component\Grid\Definition\Grid;
 use Sylius\Component\Grid\Exception\UndefinedGridException;
+use Sylius\Component\Grid\Factory\GridFactoryInterface;
 use Sylius\Component\Grid\Provider\GridProviderInterface;
-use Webmozart\Assert\Assert;
 
 final class ServiceGridProvider implements GridProviderInterface
 {
-    private ArrayToDefinitionConverterInterface $converter;
-
     private GridRegistryInterface $gridRegistry;
 
-    private GridConfigurationExtenderInterface $gridConfigurationExtender;
-
-    private GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler;
+    private GridFactoryInterface $gridFactory;
 
     public function __construct(
-        ArrayToDefinitionConverterInterface $converter,
         GridRegistryInterface $gridRegistry,
-        GridConfigurationExtenderInterface $gridConfigurationExtender,
-        ?GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler = null,
+        GridFactoryInterface $gridFactory,
     ) {
-        $this->converter = $converter;
         $this->gridRegistry = $gridRegistry;
-        $this->gridConfigurationExtender = $gridConfigurationExtender;
-        $this->gridConfigurationRemovalsHandler = $gridConfigurationRemovalsHandler ?? new GridConfigurationRemovalsHandler();
+        $this->gridFactory = $gridFactory;
     }
 
     public function get(string $code): Grid
@@ -58,25 +46,6 @@ final class ServiceGridProvider implements GridProviderInterface
             throw new UndefinedGridException($code);
         }
 
-        $gridConfiguration = $grid->toArray();
-
-        if (isset($gridConfiguration['extends'])) {
-            $gridConfiguration = $this->extend($gridConfiguration, $gridConfiguration['extends']);
-        }
-
-        $gridConfiguration = $this->gridConfigurationRemovalsHandler->handle($gridConfiguration);
-
-        return $this->converter->convert($code, $gridConfiguration);
-    }
-
-    private function extend(array $gridConfiguration, string $parentGridCode): array
-    {
-        $parentGrid = $this->gridRegistry->getGrid($parentGridCode);
-
-        Assert::notNull($parentGrid, sprintf('Parent grid with code "%s" does not exists.', $parentGridCode));
-
-        $parentGridConfiguration = $parentGrid->toArray();
-
-        return $this->gridConfigurationExtender->extends($gridConfiguration, $parentGridConfiguration);
+        return $this->gridFactory->create($code, $grid->toArray());
     }
 }

@@ -18,25 +18,38 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Bundle\GridBundle\Grid\GridInterface;
 use Sylius\Bundle\GridBundle\Provider\ServiceGridProvider;
 use Sylius\Bundle\GridBundle\Registry\GridRegistryInterface;
-use Sylius\Component\Grid\Configuration\GridConfigurationExtender;
-use Sylius\Component\Grid\Configuration\GridConfigurationRemovalsHandlerInterface;
-use Sylius\Component\Grid\Definition\ArrayToDefinitionConverterInterface;
 use Sylius\Component\Grid\Definition\Grid;
 use Sylius\Component\Grid\Exception\UndefinedGridException;
+use Sylius\Component\Grid\Factory\GridFactoryInterface;
 use Sylius\Component\Grid\Provider\GridProviderInterface;
 
 class ServiceGridProviderSpec extends ObjectBehavior
 {
     function let(
-        ArrayToDefinitionConverterInterface $converter,
+        GridFactoryInterface $gridFactory,
         GridRegistryInterface $gridRegistry,
-        GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler,
+        GridInterface $firstGrid,
+        GridInterface $secondGrid,
+        GridInterface $thirdGrid,
+        Grid $firstGridDefinition,
+        Grid $secondGridDefinition,
+        Grid $thirdGridDefinition,
     ): void {
+        $gridRegistry->getGrid('sylius_admin_tax_category')->willReturn($firstGrid);
+        $gridRegistry->getGrid('sylius_admin_product')->willReturn($secondGrid);
+        $gridRegistry->getGrid('app_book')->willReturn($thirdGrid);
+
+        $firstGrid->toArray()->willReturn(['configuration1']);
+        $secondGrid->toArray()->willReturn(['configuration2' => 'foo']);
+        $thirdGrid->toArray()->willReturn(['configuration3']);
+
+        $gridFactory->create('sylius_admin_tax_category', ['configuration1'])->willReturn($firstGridDefinition);
+        $gridFactory->create('sylius_admin_product', ['configuration2' => 'foo'])->willReturn($secondGridDefinition);
+        $gridFactory->create('app_book', ['configuration3'])->willReturn($thirdGridDefinition);
+
         $this->beConstructedWith(
-            $converter,
             $gridRegistry,
-            new GridConfigurationExtender(),
-            $gridConfigurationRemovalsHandler,
+            $gridFactory,
         );
     }
 
@@ -50,58 +63,17 @@ class ServiceGridProviderSpec extends ObjectBehavior
         $this->shouldImplement(GridProviderInterface::class);
     }
 
-    function it_gets_grids_definitions_by_code(
-        ArrayToDefinitionConverterInterface $converter,
-        GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler,
-        GridRegistryInterface $gridRegistry,
-        GridInterface $bookGrid,
-        Grid $gridDefinition,
-    ): void {
-        $gridRegistry->getGrid('app_book')->willReturn($bookGrid);
-        $bookGrid->toArray()->willReturn([]);
-
-        $converter->convert('app_book', [])->willReturn($gridDefinition);
-        $gridConfigurationRemovalsHandler->handle([])->willReturn([]);
-
-        $this->get('app_book')->shouldReturn($gridDefinition);
+    function it_returns_grid_definition_by_name(Grid $firstGridDefinition, Grid $secondGridDefinition, Grid $thirdGridDefinition): void
+    {
+        $this->get('sylius_admin_tax_category')->shouldBeLike($firstGridDefinition);
+        $this->get('sylius_admin_product')->shouldBeLike($secondGridDefinition);
+        $this->get('app_book')->shouldBeLike($thirdGridDefinition);
     }
 
     function it_gets_grids_definitions_by_fully_qualified_class_name(
-        ArrayToDefinitionConverterInterface $converter,
-        GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler,
-        GridRegistryInterface $gridRegistry,
-        Grid $gridDefinition,
+        Grid $thirdGridDefinition,
     ): void {
-        $bookGrid = new BookGrid();
-        $gridRegistry->getGrid('app_book')->willReturn($bookGrid);
-
-        $converter->convert('app_book', [])->willReturn($gridDefinition);
-        $gridConfigurationRemovalsHandler->handle($bookGrid->toArray())->willReturn([]);
-
-        $this->get(BookGrid::class)->shouldReturn($gridDefinition);
-    }
-
-    function it_supports_grid_inheritance(
-        ArrayToDefinitionConverterInterface $converter,
-        GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler,
-        GridRegistryInterface $gridRegistry,
-        GridInterface $fooGrid,
-        GridInterface $fooFightersGrid,
-        Grid $fooGridDefinition,
-        Grid $fooFightersGridDefinition,
-    ): void {
-        $gridRegistry->getGrid('app_foo')->willReturn($fooGrid);
-        $gridRegistry->getGrid('app_foo_fighters')->willReturn($fooFightersGrid);
-
-        $fooGrid->toArray()->willReturn(['configuration_foo' => 'foo']);
-        $fooFightersGrid->toArray()->willReturn(['extends' => 'app_foo', 'configuration_foo_fighters' => 'foo_fighters']);
-
-        $converter->convert('app_foo', ['configuration_foo' => 'foo'])->willReturn($fooGridDefinition);
-        $converter->convert('app_foo_fighters', ['configuration_foo' => 'foo', 'configuration_foo_fighters' => 'foo_fighters'])->willReturn($fooFightersGridDefinition);
-
-        $gridConfigurationRemovalsHandler->handle(['configuration_foo' => 'foo', 'configuration_foo_fighters' => 'foo_fighters'])->willReturn(['configuration_foo' => 'foo', 'configuration_foo_fighters' => 'foo_fighters']);
-
-        $this->get('app_foo_fighters')->shouldReturn($fooFightersGridDefinition);
+        $this->get(BookGrid::class)->shouldBeLike($thirdGridDefinition);
     }
 
     function it_throws_an_undefined_grid_exception_when_grid_is_not_found(
@@ -110,49 +82,5 @@ class ServiceGridProviderSpec extends ObjectBehavior
         $gridRegistry->getGrid('app_book')->willReturn(null);
 
         $this->shouldThrow(UndefinedGridException::class)->during('get', ['app_book']);
-    }
-
-    function it_throws_an_invalid_argument_exception_when_parent_grid_is_not_found(
-        GridRegistryInterface $gridRegistry,
-        GridInterface $grid,
-    ): void {
-        $gridRegistry->getGrid('app_foo_fighters')->willReturn($grid);
-        $gridRegistry->getGrid('app_foo')->willReturn(null);
-
-        $grid->toArray()->willReturn(['extends' => 'app_foo']);
-
-        $this->shouldThrow(\InvalidArgumentException::class)->during('get', ['app_foo_fighters']);
-    }
-
-    function it_supports_grid_removals(
-        ArrayToDefinitionConverterInterface $converter,
-        GridRegistryInterface $gridRegistry,
-        GridConfigurationRemovalsHandlerInterface $gridConfigurationRemovalsHandler,
-        GridInterface $fooGrid,
-        Grid $fooGridDefinition,
-    ): void {
-        $gridRegistry->getGrid('app_foo')->willReturn($fooGrid);
-
-        $fooGrid->toArray()->willReturn([
-            'fields' => ['customer' => []],
-            'removals' => [
-                'fields' => ['customer'],
-            ],
-        ]);
-
-        $gridConfigurationRemovalsHandler->handle([
-            'fields' => ['customer' => []],
-            'removals' => [
-                'fields' => ['customer'],
-            ],
-        ])->willReturn([
-            'fields' => [],
-        ]);
-
-        $converter->convert('app_foo', [
-            'fields' => [],
-        ])->willReturn($fooGridDefinition);
-
-        $this->get('app_foo')->shouldReturn($fooGridDefinition);
     }
 }

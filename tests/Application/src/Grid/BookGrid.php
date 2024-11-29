@@ -74,8 +74,7 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
             ->orderBy('title', 'asc')
             ->addField(
                 StringField::create('title')
-                    ->setLabel('Title')
-                    ->setSortable(true),
+                    ->setLabel('Title'),
             )
             ->addField(
                 StringField::create('author')
