@@ -21,7 +21,7 @@ Sylius is an Open Source eCommerce solution built from decoupled components with
 Documentation
 -------------
 
-[Documentation is available in the *docs* folder.](docs/index.md)
+[Sylius Stack documentation &raquo; Grid Bundle](https://stack.sylius.com/grid/index)
 
 Contributing
 ------------
