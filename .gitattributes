@@ -2,7 +2,6 @@
 /.github export-ignore
 /.gitignore export-ignore
 /.php_cs.dist export-ignore
-/docs export-ignore
 /ecs.php export-ignore
 /phpspec/bootstrap.php export-ignore
 /phpspec.yml.dist export-ignore
