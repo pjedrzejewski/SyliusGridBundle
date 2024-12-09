@@ -29,3 +29,7 @@ services:
 
     App\BoardGameBlog\:
         resource: '../src/BoardGameBlog'
+
+    app.tools.string.strtoupper:
+        class: App\Tools\StringStrtoupper
+        public: true
