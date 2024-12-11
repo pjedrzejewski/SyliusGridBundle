@@ -22,6 +22,7 @@ use Sylius\Bundle\GridBundle\Builder\Action\ShowAction;
 use Sylius\Bundle\GridBundle\Builder\Action\UpdateAction;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\MainActionGroup;
+use Sylius\Bundle\GridBundle\Builder\Field\ExpressionField;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
 use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
@@ -109,6 +110,10 @@ final class BookGrid extends AbstractGrid implements ResourceAwareGridInterface
                     UpdateAction::create(),
                     DeleteAction::create(),
                 ),
+            )
+            ->addField(
+                ExpressionField::create('price', 'value.getAmount() / cents_per_unit ~ " " ~ get_currency_symbol(value.getCurrencyCode())')
+                    ->setLabel('Price'),
             )
             ->setLimits([10, 5, 15])
         ;

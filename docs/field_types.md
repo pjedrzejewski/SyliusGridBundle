@@ -319,3 +319,78 @@ $field->setOptions([
     // Your options here
 ]);
 ```
+
+Expression
+----------
+
+The **Expression** field type provides flexibility by allowing you to specify an expression that will be evaluated on the fly.
+This feature uses Symfony's expression language, making it versatile and powerful without needing to create additional callbacks or templates.
+
+The expression will be evaluated with the following context:
+
+- `value`: The value of the row.
+
+You can also control whether special characters in the output are escaped by setting the `htmlspecialchars` option.
+By default, this is enabled, but you can disable it if the output contains HTML elements that should render as HTML.
+
+<details open><summary>Yaml</summary>
+
+```yaml
+# config/packages/sylius_grid.yaml
+
+sylius_grid:
+    grids:
+        app_user:
+            fields:
+                price:
+                    type: expression
+                    label: app.ui.price
+                    options:
+                        expression: 'value ~ "$"'
+                role:
+                    type: expression
+                    label: app.ui.price
+                    options:
+                        expression: '"<strong>" ~ value ~ "</strong>"'
+                        htmlspecialchars: false
+                most_exensive_order_total:
+                    type: expression
+                    label: app.ui.most_exensive_order_total
+                    options:
+                        expression: 'container.get("sylius.repository.order").findMostExpensiveOrder(value).getTotal()'
+```
+
+</details>
+
+<details open><summary>PHP</summary>
+
+```php
+<?php
+// config/packages/sylius_grid.php
+
+use Sylius\Bundle\GridBundle\Builder\Field\ExpressionField;
+use Sylius\Bundle\GridBundle\Builder\GridBuilder;
+use Sylius\Bundle\GridBundle\Config\GridConfig;
+
+return static function (GridConfig $grid): void {
+    $grid->addGrid(GridBuilder::create('app_user', '%app.model.user.class%')
+            ->addField(
+                ExpressionField::create('price', 'value ~ "$"')
+                    ->setLabel('app.ui.price')
+            )
+            ->addField(
+                ExpressionField::create('role', '"<strong>" ~ value ~ "</strong>"', htmlspecialchars: false)
+                    ->setLabel('app.ui.role')
+            )
+            ->addField(
+                ExpressionField::create(
+                    'most_expensive_order_total',
+                    'container.get("sylius.repository.order").findMostExpensiveOrder(value).getTotal()',
+                )
+                    ->setLabel('app.ui.most_exensive_order_total')
+            )
+    );
+};
+```
+
+</details>

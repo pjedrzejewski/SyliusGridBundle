@@ -35,6 +35,7 @@
         "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.0",
         "symfony/deprecation-contracts": "^2.2 || ^3.1",
         "symfony/event-dispatcher": "^5.4 || ^6.4 || ^7.0",
+        "symfony/expression-language": "^5.4 || ^6.4 || ^7.0",
         "symfony/form": "^5.4 || ^6.4 || ^7.0",
         "symfony/framework-bundle": "^5.4 || ^6.4 || ^7.0",
         "symfony/http-kernel": "^5.4 || ^6.4 || ^7.0",
@@ -97,11 +98,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Sylius\\Bundle\\GridBundle\\spec\\": "src/Bundle/spec/",
-            "Sylius\\Component\\Grid\\spec\\": "src/Component/spec/",
             "App\\": "tests/Application/src/",
             "AppBundle\\": "src/Bundle/test/src/AppBundle/",
-            "App\\Tests\\Tmp\\": "tests/Application/tmp/"
+            "App\\Tests\\Tmp\\": "tests/Application/tmp/",
+            "spec\\Sylius\\Bundle\\GridBundle\\": "src/Bundle/spec/",
+            "spec\\Sylius\\Component\\Grid\\": "src/Component/spec/"
         }
     },
     "config": {
@@ -121,7 +122,6 @@
             "vendor/bin/ecs check --fix"
         ],
         "test-yaml-config": [
-            "vendor/bin/phpspec run --ansi --no-interaction",
             "APP_ENV=test_grids_with_yaml_config vendor/bin/phpunit --colors=always"
         ],
         "test-php-config": [

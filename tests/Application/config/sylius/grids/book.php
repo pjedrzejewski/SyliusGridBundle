@@ -14,6 +14,7 @@ declare(strict_types=1);
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Grid\Builder\NationalityFilter;
+use Sylius\Bundle\GridBundle\Builder\Field\ExpressionField;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Filter\EntityFilter;
 use Sylius\Bundle\GridBundle\Builder\Filter\SelectFilter;
@@ -63,6 +64,10 @@ return static function (GridConfig $grid) {
                 ->setLabel('Nationality')
                 ->setPath('author.nationality.name')
                 ->setSortable(true, 'author.nationality.name'),
+        )
+        ->addField(
+            ExpressionField::create('price', 'value.getAmount() / cents_per_unit ~ " " ~ get_currency_symbol(value.getCurrencyCode())')
+                ->setLabel('Price'),
         )
         ->setLimits([10, 5, 15]),
     );

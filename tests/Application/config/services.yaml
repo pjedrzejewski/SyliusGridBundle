@@ -29,3 +29,6 @@ services:
 
     App\BoardGameBlog\:
         resource: '../src/BoardGameBlog'
+
+    App\ExpressionLanguage\Variables: ~
+    App\ExpressionLanguage\Provider: ~
