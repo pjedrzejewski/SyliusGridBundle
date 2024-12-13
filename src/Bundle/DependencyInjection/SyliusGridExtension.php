@@ -13,7 +13,13 @@ declare(strict_types=1);
 
 namespace Sylius\Bundle\GridBundle\DependencyInjection;
 
+use Pagerfanta\Doctrine\DBAL\QueryAdapter as DBALQueryAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter as ORMQueryAdapter;
+use Pagerfanta\Doctrine\PHPCRODM\QueryAdapter as PHPCRODMQueryAdapter;
 use Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle;
+use Sylius\Bundle\GridBundle\Doctrine\DBAL\Driver as DBALDriver;
+use Sylius\Bundle\GridBundle\Doctrine\ORM\Driver as ORMDriver;
+use Sylius\Bundle\GridBundle\Doctrine\PHPCRODM\Driver as PHPCRODMDriver;
 use Sylius\Bundle\GridBundle\Grid\GridInterface;
 use Sylius\Bundle\GridBundle\SyliusGridBundle;
 use Symfony\Component\Config\FileLocator;
@@ -48,6 +54,22 @@ final class SyliusGridExtension extends Extension
             }
 
             $loader->load(sprintf('services/integrations/%s.xml', $enabledDriver));
+        }
+
+        foreach ($config['grids'] as $grid) {
+            $driverName = $grid['driver']['name'];
+
+            if (ORMDriver::NAME === $driverName && !class_exists(ORMQueryAdapter::class)) {
+                throw new \LogicException('Pagerfanta ORM adapter is not available. Try running "composer require pagerfanta/doctrine-orm-adapter".');
+            }
+
+            if (DBALDriver::NAME === $driverName && !class_exists(DBALQueryAdapter::class)) {
+                throw new \LogicException('Pagerfanta DBAL adapter is not available. Try running "composer require pagerfanta/doctrine-dbal-adapter".');
+            }
+
+            if (PHPCRODMDriver::NAME === $driverName && !class_exists(PHPCRODMQueryAdapter::class)) {
+                throw new \LogicException('Pagerfanta PHPCR-ODM adapter is not available. Try running "composer require pagerfanta/doctrine-phpcr-odm-adapter".');
+            }
         }
 
         if (\class_exists(SyliusCurrencyBundle::class)) {
