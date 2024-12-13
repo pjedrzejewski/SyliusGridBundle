@@ -17,22 +17,24 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Bundle\MakerBundle\Exception\RuntimeCommandException;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
+use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 
 final class MakeGrid extends AbstractMaker
 {
-    private ManagerRegistry $managerRegistry;
-
-    public function __construct(ManagerRegistry $managerRegistry)
-    {
-        $this->managerRegistry = $managerRegistry;
+    public function __construct(
+        private ManagerRegistry $managerRegistry,
+        private DoctrineHelper $doctrineHelper,
+    ) {
     }
 
     public static function getCommandName(): string
@@ -63,6 +65,10 @@ final class MakeGrid extends AbstractMaker
         }
 
         $argument = $command->getDefinition()->getArgument('entity');
+
+        $question = $this->createEntityClassQuestion($argument->getDescription());
+        $answeredEntityClass = $io->askQuestion($question);
+
         $entity = $io->choice($argument->getDescription(), $this->entityChoices());
 
         $input->setArgument('entity', $entity);
@@ -138,6 +144,15 @@ final class MakeGrid extends AbstractMaker
         }
 
         return $choices;
+    }
+
+    private function createEntityClassQuestion(string $questionText): Question
+    {
+        $question = new Question($questionText);
+        $question->setValidator([Validator::class, 'notBlank']);
+        $question->setAutocompleterValues($this->doctrineHelper->getEntitiesForAutocomplete());
+
+        return $question;
     }
 
     private function defaultFieldsFor(string $class): iterable

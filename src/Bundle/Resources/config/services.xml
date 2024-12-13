@@ -97,6 +97,7 @@
 
         <service id="sylius.grid.maker" class="Sylius\Bundle\GridBundle\Maker\MakeGrid">
             <argument type="service" id="doctrine" />
+            <argument type="service" id="maker.doctrine_helper" />
             <tag name="maker.command" />
         </service>
     </services>
