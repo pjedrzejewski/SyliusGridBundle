@@ -43,7 +43,9 @@ sylius_grid:
                         fields: { }
                     form_options:
                         type: contains # type of string filtering option, if you one to have just one
-                    default_value: ~
+                    default_value:
+                        type: contains
+                        value: example
                 enabled:
                     type: boolean # Type of filter
                     label: app.ui.enabled
@@ -53,7 +55,7 @@ sylius_grid:
                     options:
                         field: enabled
                     form_options: { }
-                    default_value: ~
+                    default_value: 'false'
                 date:
                     type: date # Type of filter
                     label: app.ui.created_at
