@@ -16,7 +16,7 @@ namespace Sylius\Component\Grid\Attribute;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class AsFilter
 {
-    public const SERVICE_TAG = 'sylius.grid.filter';
+    public const SERVICE_TAG = 'sylius.grid_filter';
 
     /**
      * @param class-string $formType The form type class name to use for filter rendering
