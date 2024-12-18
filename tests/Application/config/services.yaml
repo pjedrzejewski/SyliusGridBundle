@@ -25,6 +25,7 @@ services:
             - '@app.repository.author'
         public: true
 
+    App\Filter\AttributeNationalityFilter: null
     App\Filter\NationalityFilter: null
 
     App\BoardGameBlog\:

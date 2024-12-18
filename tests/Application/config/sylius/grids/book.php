@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Grid\Builder\AttributeNationalityFilter;
 use App\Grid\Builder\NationalityFilter;
 use Sylius\Bundle\GridBundle\Builder\Field\StringField;
 use Sylius\Bundle\GridBundle\Builder\Filter\EntityFilter;
@@ -28,6 +29,11 @@ return static function (GridConfig $grid) {
         ->addFilter(EntityFilter::create('author', Author::class, true))
         ->addFilter(NationalityFilter::create(
             'nationality',
+            null,
+            ['author.nationality'],
+        ))
+        ->addFilter(AttributeNationalityFilter::create(
+            AttributeNationalityFilter::class,
             null,
             ['author.nationality'],
         ))
